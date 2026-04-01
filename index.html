@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>花粉致敏风险地图 - 多图查看</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", sans-serif;
+        }
+
+        body {
+            background-color: #f7faff;
+            padding: 20px;
+        }
+
+        .title {
+            text-align: center;
+            font-size: 28px;
+            color: #2c3e50;
+            margin: 20px 0;
+        }
+
+        /* 切换按钮栏 */
+        .tab-bar {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .tab-btn {
+            padding: 10px 18px;
+            background: #e3f2fd;
+            border: none;
+            border-radius: 6px;
+            font-size: 15px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .tab-btn.active {
+            background: #1976d2;
+            color: white;
+        }
+
+        /* 图片展示区域 */
+        .image-box {
+            max-width: 1100px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .image-box img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            display: none; /* 默认隐藏 */
+        }
+
+        .image-box img.show {
+            display: block; /* 显示当前图 */
+        }
+    </style>
+</head>
+
+<body>
+    <h1 class="title">花粉致敏风险地图（多图切换查看）</h1>
+
+    <!-- ====================== 切换按钮栏 ====================== -->
+    <div class="tab-bar">
+        <button class="tab-btn active" onclick="showImg(0)">地图 1</button>
+        <button class="tab-btn" onclick="showImg(1)">地图 2</button>
+        <button class="tab-btn" onclick="showImg(2)">地图 3</button>
+        <button class="tab-btn" onclick="showImg(3)">地图 4</button>
+        <!-- 你可以继续加更多按钮：地图5、6、7... -->
+    </div>
+
+    <!-- ====================== 图片区域 ====================== -->
+    <div class="image-box">
+        <img src="3月.png" class="show" alt="花粉地图1">
+        <img src="4月.png" alt="花粉地图2">
+        <img src="5月.png" alt="花粉地图3">
+        <img src="6月.png" alt="花粉地图4">
+        <!-- 继续加更多图片 -->
+    </div>
+
+    <!-- 切换逻辑 -->
+    <script>
+        let allBtns = document.querySelectorAll(".tab-btn");
+        let allImgs = document.querySelectorAll(".image-box img");
+
+        function showImg(index) {
+            // 隐藏所有图片
+            allImgs.forEach(img => img.classList.remove("show"));
+            // 显示选中的图片
+            allImgs[index].classList.add("show");
+
+            // 按钮高亮
+            allBtns.forEach(btn => btn.classList.remove("active"));
+            allBtns[index].classList.add("active");
+        }
+    </script>
+</body>
+</html>
