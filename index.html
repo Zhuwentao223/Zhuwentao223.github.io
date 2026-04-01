@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>花粉致敏风险地图 - 多图查看</title>
+    <title>北京市气传花粉致敏风险地图</title>
     <style>
         * {
             margin: 0;
@@ -13,98 +13,173 @@
         }
 
         body {
-            background-color: #f7faff;
+            background-color: #f4f8ff;
             padding: 20px;
         }
 
         .title {
             text-align: center;
-            font-size: 28px;
+            font-size: 26px;
             color: #2c3e50;
             margin: 20px 0;
         }
 
-        /* 切换按钮栏 */
-        .tab-bar {
+        /* 大分类按钮 */
+        .group-tabs {
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
             gap: 10px;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
 
-        .tab-btn {
-            padding: 10px 18px;
+        .group-btn {
+            padding: 10px 16px;
             background: #e3f2fd;
             border: none;
             border-radius: 6px;
-            font-size: 15px;
             cursor: pointer;
-            transition: 0.3s;
+            font-size: 14px;
         }
 
-        .tab-btn.active {
+        .group-btn.active {
             background: #1976d2;
             color: white;
         }
 
-        /* 图片展示区域 */
-        .image-box {
-            max-width: 1100px;
+        /* 月份小按钮 */
+        .month-tabs {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 25px;
+        }
+
+        .month-btn {
+            padding: 8px 14px;
+            background: #f1f9ff;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .month-btn.active {
+            background: #2196f3;
+            color: white;
+            border-color: #2196f3;
+        }
+
+        /* 图片展示 */
+        .img-container {
+            max-width: 1200px;
             margin: 0 auto;
             text-align: center;
         }
 
-        .image-box img {
+        .img-container img {
             width: 100%;
             height: auto;
             border-radius: 10px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            display: none; /* 默认隐藏 */
+            display: none;
         }
 
-        .image-box img.show {
-            display: block; /* 显示当前图 */
+        .img-container img.show {
+            display: block;
         }
     </style>
 </head>
 
 <body>
-    <h1 class="title">花粉致敏风险地图（多图切换查看）</h1>
+    <h1 class="title">北京市气传花粉致敏风险地图</h1>
 
-    <!-- ====================== 切换按钮栏 ====================== -->
-    <div class="tab-bar">
-        <button class="tab-btn active" onclick="showImg(0)">地图 1</button>
-        <button class="tab-btn" onclick="showImg(1)">地图 2</button>
-        <button class="tab-btn" onclick="showImg(2)">地图 3</button>
-        <button class="tab-btn" onclick="showImg(3)">地图 4</button>
-        <!-- 你可以继续加更多按钮：地图5、6、7... -->
+    <!-- 6大分类 -->
+    <div class="group-tabs">
+        <button class="group-btn active" onclick="showGroup(0)">全市月度风险</button>
+        <button class="group-btn" onclick="showGroup(1)">城六区月度风险</button>
+        <button class="group-btn" onclick="showGroup(2)">公园月度风险</button>
+        <button class="group-btn" onclick="showGroup(3)">嘉河公园</button>
+        <button class="group-btn" onclick="showGroup(4)">树村公园</button>
+        <button class="group-btn" onclick="showGroup(5)">海淀公园</button>
     </div>
 
-    <!-- ====================== 图片区域 ====================== -->
-    <div class="image-box">
-        <img src="3月.png" class="show" alt="花粉地图1">
-        <img src="4月.png" alt="花粉地图2">
-        <img src="5月.png" alt="花粉地图3">
-        <img src="6月.png" alt="花粉地图4">
-        <!-- 继续加更多图片 -->
-    </div>
+    <!-- 月份切换 -->
+    <div class="month-tabs" id="monthTab"></div>
 
-    <!-- 切换逻辑 -->
+    <!-- 图片区域 -->
+    <div class="img-container" id="imgContainer"></div>
+
     <script>
-        let allBtns = document.querySelectorAll(".tab-btn");
-        let allImgs = document.querySelectorAll(".image-box img");
+        // 所有图片配置（严格按你的文件名）
+        const groups = [
+            {
+                name: "全市月度风险",
+                months: [3,4,5,6,7,8,9,10],
+                imgs: ["3月.png","4月.png","5月.png","6月.png","7月.png","8月.png","9月.png","10月.png"]
+            },
+            {
+                name: "城六区月度风险",
+                months: [3,4,5,6,7,8,9,10],
+                imgs: ["3月六城区.png","4月六城区.png","5月六城区.png","6月六城区.png","7月六城区.png","8月六城区.png","9月六城区.png","10月六城区.png"]
+            },
+            {
+                name: "公园月度风险",
+                months: [3,4,5,6,7,8,9,10],
+                imgs: ["3月公园.png","4月公园.png","5月公园.png","6月公园.png","7月公园.png","8月公园.png","9月公园.png","10月公园.png"]
+            },
+            {
+                name: "嘉河公园",
+                months: [3,4,5],
+                imgs: ["3月嘉河公园.png","4月嘉河公园.png","5月嘉河公园.png"]
+            },
+            {
+                name: "树村公园",
+                months: [3,4,5,6],
+                imgs: ["3月树村公园.png","4月树村公园.png","5月树村公园.png","6月树村公园.png"]
+            },
+            {
+                name: "海淀公园",
+                months: [3,4,5],
+                imgs: ["3月海淀公园.png","4月海淀公园.png","5月海淀公园.png"]
+            }
+        ];
 
-        function showImg(index) {
-            // 隐藏所有图片
-            allImgs.forEach(img => img.classList.remove("show"));
-            // 显示选中的图片
-            allImgs[index].classList.add("show");
+        let currentGroup = 0;
+        let groupBtns = document.querySelectorAll(".group-btn");
+        let monthTab = document.getElementById("monthTab");
+        let imgContainer = document.getElementById("imgContainer");
 
-            // 按钮高亮
-            allBtns.forEach(btn => btn.classList.remove("active"));
-            allBtns[index].classList.add("active");
+        // 显示分类
+        function showGroup(index) {
+            currentGroup = index;
+            groupBtns.forEach((b,i) => b.classList.toggle("active", i===index));
+            renderMonth();
+            showMonth(0);
         }
+
+        // 渲染月份按钮
+        function renderMonth() {
+            let g = groups[currentGroup];
+            monthTab.innerHTML = g.months.map((m,i) =>
+                `<button class="month-btn ${i===0?'active':''}" onclick="showMonth(${i})">${m}月</button>`
+            ).join("");
+        }
+
+        // 显示月份图片
+        function showMonth(index) {
+            let g = groups[currentGroup];
+            imgContainer.innerHTML = g.imgs.map((src,i) =>
+                `<img src="${src}" class="${i===index?'show':''}">`
+            ).join("");
+
+            document.querySelectorAll(".month-btn").forEach((b,i) =>
+                b.classList.toggle("active", i===index)
+            );
+        }
+
+        // 初始化
+        showGroup(0);
     </script>
 </body>
 </html>
