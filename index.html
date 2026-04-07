@@ -17,62 +17,79 @@ body{background:#f4f8ff;padding:20px}
 .img-container{max-width:1200px;margin:0 auto;text-align:center}
 .img-container img{width:100%;height:auto;border-radius:10px;box-shadow:0 4px 15px rgba(0,0,0,0.1);display:none}
 .img-container img.show{display:block}
+
+/* 二维码区域样式 */
+.qrcode-box{
+  margin: 50px auto 20px;
+  text-align:center;
+  background:#fff;
+  padding:20px;
+  border-radius:12px;
+  max-width:320px;
+  box-shadow:0 2px 10px rgba(0,0,0,0.08)
+}
+.qrcode-box p{
+  margin-bottom:12px;
+  font-size:16px;color:#333
+}
+#qrcode{
+  width:220px;height:220px;
+  margin:0 auto;
+}
 </style>
 </head>
-<!-- 二维码展示区域 -->
-<div style="text-align: center; margin: 40px 0; padding: 20px; background: #fff; border-radius: 10px; max-width: 400px; margin-left: auto; margin-right: auto;">
-    <h3 style="color: #2c3e50; margin-bottom: 15px;">扫码访问完整地图</h3>
-    <img id="qrcode" style="width: 250px; height: 250px; border-radius: 8px;" alt="网站二维码">
-    <p style="color: #666; margin-top: 10px; font-size: 14px;">扫码即可在手机查看北京市气传花粉致敏风险地图</p>
-</div>
-
-<!-- 引入二维码生成库 -->
-<script src="https://cdn.bootcdn.net/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-<script>
-    // 替换成你自己的网站链接！！！
-    const siteUrl = "https://zhuwentao223.github.io/pollen-beijing-2026";
-    // 生成二维码
-    new QRCode(document.getElementById("qrcode"), {
-        text: siteUrl,
-        width: 250,
-        height: 250,
-        colorDark: "#000000",
-        colorLight: "#ffffff",
-        correctLevel: QRCode.CorrectLevel.H
-    });
-</script>
 <body>
+
 <h1 class="title">北京市气传花粉致敏风险地图</h1>
+
 <div class="group-tabs">
 <button class="group-btn active" onclick="g(0)">北京月度风险</button>
 <button class="group-btn" onclick="g(1)">城六区月度风险</button>
 <button class="group-btn" onclick="g(2)">公园月度风险</button>
-<button class="group-btn" onclick="g(3)">广阳谷城市森林公园</button>
+<button class="group-btn" onclick="g(3)">广阳谷公园</button>
 <button class="group-btn" onclick="g(4)">海淀公园</button>
 <button class="group-btn" onclick="g(5)">树村公园</button>
 <button class="group-btn" onclick="g(6)">嘉河公园</button>
-<button class="group-btn" onclick="g(7)">东升八家郊野公园</button>
+<button class="group-btn" onclick="g(7)">八家郊野公园</button>
 </div>
+
 <div class="month-tabs" id="m"></div>
 <div class="img-container" id="i"></div>
 
+<!-- 二维码区域 -->
+<div class="qrcode-box">
+  <p>手机扫码查看本地图</p>
+  <div id="qrcode"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
 <script>
+// ==============================================
+// 这里换成你自己的真实网址！！！
+const mySite = "https://zhuwentao223.github.io/huafenzhimin-beijing-2026";
+// ==============================================
+
+// 生成二维码
+QRCode.toCanvas(document.getElementById('qrcode'), mySite, {
+  width: 220,
+  margin: 1,
+  color: {
+    dark: '#1976d2',
+    light: '#ffffff'
+  }
+}, function (error) {
+  if (error) console.error(error)
+})
+
+// 地图切换逻辑
 const groups=[
-// 1 北京全市 8张
 {months:[3,4,5,6,7,8,9,10],imgs:["3月北京.png","4月北京.png","5月北京.png","6月北京.png","7月北京.png","8月北京.png","9月北京.png","10月北京.png"]},
-// 2 城六区 8张
 {months:[3,4,5,6,7,8,9,10],imgs:["3月六城区.png","4月六城区.png","5月六城区.png","6月六城区.png","7月六城区.png","8月六城区.png","9月六城区.png","10月六城区.png"]},
-// 3 公园 8张
 {months:[3,4,5,6,7,8,9,10],imgs:["3月公园.png","4月公园.png","5月公园.png","6月公园.png","7月公园.png","8月公园.png","9月公园.png","10月公园.png"]},
-// 4 广阳谷 8张
 {months:[3,4,5,6,7,8,9,10],imgs:["3月广阳谷公园.png","4月广阳谷公园.png","5月广阳谷公园.png","6月广阳谷公园.png","7月广阳谷公园.png","8月广阳谷公园.png","9月广阳谷公园.png","10月广阳谷公园.png"]},
-// 5 海淀公园 3张（已删6月）
 {months:[3,4,5],imgs:["3月海淀公园.png","4月海淀公园.png","5月海淀公园.png"]},
-// 6 树村公园 3张（已删6月）
 {months:[3,4,5],imgs:["3月树村公园.png","4月树村公园.png","5月树村公园.png"]},
-// 7 嘉河公园 3张（已删6月）
 {months:[3,4,5],imgs:["3月嘉河公园.png","4月嘉河公园.png","5月嘉河公园.png"]},
-// 8 八家 3张
 {months:[3,4,5],imgs:["3月八家郊野公园.png","4月八家郊野公园.png","5月八家郊野公园.png"]}
 ];
 
@@ -98,5 +115,6 @@ document.querySelectorAll('.month-btn').forEach((b,i)=>b.classList.toggle('activ
 }
 g(0);
 </script>
+
 </body>
 </html>
