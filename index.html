@@ -94,14 +94,16 @@
 <body>
     <h1 class="title">北京市气传花粉致敏风险地图</h1>
 
-    <!-- 6大分类 -->
+    <!-- 8大分类 -->
     <div class="group-tabs">
-        <button class="group-btn active" onclick="showGroup(0)">全市月度风险</button>
+        <button class="group-btn active" onclick="showGroup(0)">北京月度风险</button>
         <button class="group-btn" onclick="showGroup(1)">城六区月度风险</button>
         <button class="group-btn" onclick="showGroup(2)">公园月度风险</button>
-        <button class="group-btn" onclick="showGroup(3)">嘉河公园</button>
-        <button class="group-btn" onclick="showGroup(4)">树村公园</button>
-        <button class="group-btn" onclick="showGroup(5)">海淀公园</button>
+        <button class="group-btn" onclick="showGroup(3)">广阳谷公园</button>
+        <button class="group-btn" onclick="showGroup(4)">海淀公园</button>
+        <button class="group-btn" onclick="showGroup(5)">树村公园</button>
+        <button class="group-btn" onclick="showGroup(6)">嘉河公园</button>
+        <button class="group-btn" onclick="showGroup(7)">八家郊野公园</button>
     </div>
 
     <!-- 月份切换 -->
@@ -114,14 +116,14 @@
         // 所有图片配置（严格按你的文件名）
         const groups = [
             {
-                name: "全市月度风险",
+                name: "北京月度风险",
                 months: [3,4,5,6,7,8,9,10],
-                imgs: ["3月.png","4月.png","5月.png","6月.png","7月.png","8月.png","9月.png","10月.png"]
+                imgs: ["3月北京.png","4月北京.png","5月北京.png","6月北京.png","7月北京.png","8月北京.png","9月北京.png","10月北京.png"]
             },
             {
                 name: "城六区月度风险",
                 months: [3,4,5,6,7,8,9,10],
-                imgs: ["3月六城区.png","4月六城区.png","5月六城区.png","6月六城区.png","7月六城区.png","8月六城区.png","9月六城区.png","10月六城区.png"]
+                imgs: ["3月城六区.png","4月城六区.png","5月城六区.png","6月城六区.png","7月城六区.png","8月城六区.png","9月城六区.png","10月城六区.png"]
             },
             {
                 name: "公园月度风险",
@@ -129,9 +131,14 @@
                 imgs: ["3月公园.png","4月公园.png","5月公园.png","6月公园.png","7月公园.png","8月公园.png","9月公园.png","10月公园.png"]
             },
             {
-                name: "嘉河公园",
-                months: [3,4,5],
-                imgs: ["3月嘉河公园.png","4月嘉河公园.png","5月嘉河公园.png"]
+                name: "广阳谷公园",
+                months: [3,4,5,6,7,8,9,10],
+                imgs: ["3月广阳谷公园.png","4月广阳谷公园.png","5月广阳谷公园.png","6月广阳谷公园.png","7月广阳谷公园.png","8月广阳谷公园.png","9月广阳谷公园.png","10月广阳谷公园.png"]
+            },
+            {
+                name: "海淀公园",
+                months: [3,4,5,6],
+                imgs: ["3月海淀公园.png","4月海淀公园.png","5月海淀公园.png","6月海淀公园.png"]
             },
             {
                 name: "树村公园",
@@ -139,9 +146,14 @@
                 imgs: ["3月树村公园.png","4月树村公园.png","5月树村公园.png","6月树村公园.png"]
             },
             {
-                name: "海淀公园",
+                name: "嘉河公园",
+                months: [3,4,5,6],
+                imgs: ["3月嘉河公园.png","4月嘉河公园.png","5月嘉河公园.png","6月嘉河公园.png"]
+            },
+            {
+                name: "八家郊野公园",
                 months: [3,4,5],
-                imgs: ["3月海淀公园.png","4月海淀公园.png","5月海淀公园.png"]
+                imgs: ["3月八家郊野公园.png","4月八家郊野公园.png","5月八家郊野公园.png"]
             }
         ];
 
