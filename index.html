@@ -19,6 +19,28 @@ body{background:#f4f8ff;padding:20px}
 .img-container img.show{display:block}
 </style>
 </head>
+<!-- 二维码展示区域 -->
+<div style="text-align: center; margin: 40px 0; padding: 20px; background: #fff; border-radius: 10px; max-width: 400px; margin-left: auto; margin-right: auto;">
+    <h3 style="color: #2c3e50; margin-bottom: 15px;">扫码访问完整地图</h3>
+    <img id="qrcode" style="width: 250px; height: 250px; border-radius: 8px;" alt="网站二维码">
+    <p style="color: #666; margin-top: 10px; font-size: 14px;">扫码即可在手机查看北京市气传花粉致敏风险地图</p>
+</div>
+
+<!-- 引入二维码生成库 -->
+<script src="https://cdn.bootcdn.net/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+    // 替换成你自己的网站链接！！！
+    const siteUrl = "https://zhuwentao223.github.io/pollen-beijing-2026";
+    // 生成二维码
+    new QRCode(document.getElementById("qrcode"), {
+        text: siteUrl,
+        width: 250,
+        height: 250,
+        colorDark: "#000000",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.H
+    });
+</script>
 <body>
 <h1 class="title">北京市气传花粉致敏风险地图</h1>
 <div class="group-tabs">
