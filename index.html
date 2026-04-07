@@ -46,11 +46,11 @@ body{background:#f4f8ff;padding:20px}
 <button class="group-btn active" onclick="g(0)">北京月度风险</button>
 <button class="group-btn" onclick="g(1)">城六区月度风险</button>
 <button class="group-btn" onclick="g(2)">公园月度风险</button>
-<button class="group-btn" onclick="g(3)">广阳谷公园</button>
+<button class="group-btn" onclick="g(3)">广阳谷城市森林公园</button>
 <button class="group-btn" onclick="g(4)">海淀公园</button>
 <button class="group-btn" onclick="g(5)">树村公园</button>
 <button class="group-btn" onclick="g(6)">嘉河公园</button>
-<button class="group-btn" onclick="g(7)">八家郊野公园</button>
+<button class="group-btn" onclick="g(7)">东升八家郊野公园</button>
 </div>
 
 <div class="month-tabs" id="m"></div>
@@ -66,7 +66,7 @@ body{background:#f4f8ff;padding:20px}
 <script>
 // ==============================================
 // 这里换成你自己的真实网址！！！
-const mySite = "https://zhuwentao223.github.io/huafenzhimin-beijing-2026";
+const mySite = "https://zhuwentao223.github.io/你的仓库名";
 // ==============================================
 
 // 生成二维码
@@ -81,15 +81,23 @@ QRCode.toCanvas(document.getElementById('qrcode'), mySite, {
   if (error) console.error(error)
 })
 
-// 地图切换逻辑
+// 地图切换逻辑（已删除3个分类的6月）
 const groups=[
+// 1 北京全市 8张（3-10月）
 {months:[3,4,5,6,7,8,9,10],imgs:["3月北京.png","4月北京.png","5月北京.png","6月北京.png","7月北京.png","8月北京.png","9月北京.png","10月北京.png"]},
+// 2 城六区 8张（3-10月）
 {months:[3,4,5,6,7,8,9,10],imgs:["3月六城区.png","4月六城区.png","5月六城区.png","6月六城区.png","7月六城区.png","8月六城区.png","9月六城区.png","10月六城区.png"]},
+// 3 公园 8张（3-10月）
 {months:[3,4,5,6,7,8,9,10],imgs:["3月公园.png","4月公园.png","5月公园.png","6月公园.png","7月公园.png","8月公园.png","9月公园.png","10月公园.png"]},
+// 4 广阳谷 8张（3-10月）
 {months:[3,4,5,6,7,8,9,10],imgs:["3月广阳谷公园.png","4月广阳谷公园.png","5月广阳谷公园.png","6月广阳谷公园.png","7月广阳谷公园.png","8月广阳谷公园.png","9月广阳谷公园.png","10月广阳谷公园.png"]},
+// 5 海淀公园 3张（仅3-5月，已删6月）
 {months:[3,4,5],imgs:["3月海淀公园.png","4月海淀公园.png","5月海淀公园.png"]},
+// 6 树村公园 3张（仅3-5月，已删6月）
 {months:[3,4,5],imgs:["3月树村公园.png","4月树村公园.png","5月树村公园.png"]},
+// 7 嘉河公园 3张（仅3-5月，已删6月）
 {months:[3,4,5],imgs:["3月嘉河公园.png","4月嘉河公园.png","5月嘉河公园.png"]},
+// 8 八家郊野公园 3张（3-5月）
 {months:[3,4,5],imgs:["3月八家郊野公园.png","4月八家郊野公园.png","5月八家郊野公园.png"]}
 ];
 
