@@ -1,197 +1,80 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>北京市气传花粉致敏风险地图</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: "Microsoft YaHei", sans-serif;
-        }
-
-        body {
-            background-color: #f4f8ff;
-            padding: 20px;
-        }
-
-        .title {
-            text-align: center;
-            font-size: 26px;
-            color: #2c3e50;
-            margin: 20px 0;
-        }
-
-        /* 大分类按钮 */
-        .group-tabs {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .group-btn {
-            padding: 10px 16px;
-            background: #e3f2fd;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 14px;
-        }
-
-        .group-btn.active {
-            background: #1976d2;
-            color: white;
-        }
-
-        /* 月份小按钮 */
-        .month-tabs {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 25px;
-        }
-
-        .month-btn {
-            padding: 8px 14px;
-            background: #f1f9ff;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-
-        .month-btn.active {
-            background: #2196f3;
-            color: white;
-            border-color: #2196f3;
-        }
-
-        /* 图片展示 */
-        .img-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .img-container img {
-            width: 100%;
-            height: auto;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            display: none;
-        }
-
-        .img-container img.show {
-            display: block;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>北京市气传花粉致敏风险地图</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Microsoft YaHei,sans-serif}
+body{background:#f4f8ff;padding:20px}
+.title{text-align:center;font-size:26px;margin:20px 0;color:#2c3e50}
+.group-tabs{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin-bottom:20px}
+.group-btn{padding:10px 16px;background:#e3f2fd;border:none;border-radius:6px;cursor:pointer}
+.group-btn.active{background:#1976d2;color:white}
+.month-tabs{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;margin-bottom:25px}
+.month-btn{padding:8px 14px;background:#fff;border:1px solid #ccc;border-radius:6px;cursor:pointer}
+.month-btn.active{background:#2196f3;color:white;border-color:#2196f3}
+.img-container{max-width:1200px;margin:0 auto;text-align:center}
+.img-container img{width:100%;height:auto;border-radius:10px;box-shadow:0 4px 15px rgba(0,0,0,0.1);display:none}
+.img-container img.show{display:block}
+</style>
 </head>
-
 <body>
-    <h1 class="title">北京市气传花粉致敏风险地图</h1>
+<h1 class="title">北京市气传花粉致敏风险地图</h1>
+<div class="group-tabs">
+<button class="group-btn active" onclick="g(0)">北京月度风险</button>
+<button class="group-btn" onclick="g(1)">城六区月度风险</button>
+<button class="group-btn" onclick="g(2)">公园月度风险</button>
+<button class="group-btn" onclick="g(3)">广阳谷城市森林公园</button>
+<button class="group-btn" onclick="g(4)">海淀公园</button>
+<button class="group-btn" onclick="g(5)">树村公园</button>
+<button class="group-btn" onclick="g(6)">嘉河公园</button>
+<button class="group-btn" onclick="g(7)">东升八家郊野公园</button>
+</div>
+<div class="month-tabs" id="m"></div>
+<div class="img-container" id="i"></div>
 
-    <!-- 8大分类 -->
-    <div class="group-tabs">
-        <button class="group-btn active" onclick="showGroup(0)">北京月度风险</button>
-        <button class="group-btn" onclick="showGroup(1)">城六区月度风险</button>
-        <button class="group-btn" onclick="showGroup(2)">公园月度风险</button>
-        <button class="group-btn" onclick="showGroup(3)">广阳谷公园</button>
-        <button class="group-btn" onclick="showGroup(4)">海淀公园</button>
-        <button class="group-btn" onclick="showGroup(5)">树村公园</button>
-        <button class="group-btn" onclick="showGroup(6)">嘉河公园</button>
-        <button class="group-btn" onclick="showGroup(7)">八家郊野公园</button>
-    </div>
+<script>
+const groups=[
+// 1 北京全市 8张
+{months:[3,4,5,6,7,8,9,10],imgs:["3月北京.png","4月北京.png","5月北京.png","6月北京.png","7月北京.png","8月北京.png","9月北京.png","10月北京.png"]},
+// 2 城六区 8张
+{months:[3,4,5,6,7,8,9,10],imgs:["3月六城区.png","4月六城区.png","5月六城区.png","6月六城区.png","7月六城区.png","8月六城区.png","9月六城区.png","10月六城区.png"]},
+// 3 公园 8张
+{months:[3,4,5,6,7,8,9,10],imgs:["3月公园.png","4月公园.png","5月公园.png","6月公园.png","7月公园.png","8月公园.png","9月公园.png","10月公园.png"]},
+// 4 广阳谷 8张
+{months:[3,4,5,6,7,8,9,10],imgs:["3月广阳谷公园.png","4月广阳谷公园.png","5月广阳谷公园.png","6月广阳谷公园.png","7月广阳谷公园.png","8月广阳谷公园.png","9月广阳谷公园.png","10月广阳谷公园.png"]},
+// 5 海淀公园 3张（已删6月）
+{months:[3,4,5],imgs:["3月海淀公园.png","4月海淀公园.png","5月海淀公园.png"]},
+// 6 树村公园 3张（已删6月）
+{months:[3,4,5],imgs:["3月树村公园.png","4月树村公园.png","5月树村公园.png"]},
+// 7 嘉河公园 3张（已删6月）
+{months:[3,4,5],imgs:["3月嘉河公园.png","4月嘉河公园.png","5月嘉河公园.png"]},
+// 8 八家 3张
+{months:[3,4,5],imgs:["3月八家郊野公园.png","4月八家郊野公园.png","5月八家郊野公园.png"]}
+];
 
-    <!-- 月份切换 -->
-    <div class="month-tabs" id="monthTab"></div>
-
-    <!-- 图片区域 -->
-    <div class="img-container" id="imgContainer"></div>
-
-    <script>
-        // 所有图片配置（严格按你的文件名）
-        const groups = [
-            {
-                name: "北京月度风险",
-                months: [3,4,5,6,7,8,9,10],
-                imgs: ["3月北京.png","4月北京.png","5月北京.png","6月北京.png","7月北京.png","8月北京.png","9月北京.png","10月北京.png"]
-            },
-            {
-                name: "城六区月度风险",
-                months: [3,4,5,6,7,8,9,10],
-                imgs: ["3月六城区.png","4月六城区.png","5月六城区.png","6月六城区.png","7月六城区.png","8月六城区.png","9月六城区.png","10月六城区.png"]
-            },
-            {
-                name: "公园月度风险",
-                months: [3,4,5,6,7,8,9,10],
-                imgs: ["3月公园.png","4月公园.png","5月公园.png","6月公园.png","7月公园.png","8月公园.png","9月公园.png","10月公园.png"]
-            },
-            {
-                name: "广阳谷公园",
-                months: [3,4,5,6,7,8,9,10],
-                imgs: ["3月广阳谷公园.png","4月广阳谷公园.png","5月广阳谷公园.png","6月广阳谷公园.png","7月广阳谷公园.png","8月广阳谷公园.png","9月广阳谷公园.png","10月广阳谷公园.png"]
-            },
-            {
-                name: "海淀公园",
-                months: [3,4,5,6],
-                imgs: ["3月海淀公园.png","4月海淀公园.png","5月海淀公园.png","6月海淀公园.png"]
-            },
-            {
-                name: "树村公园",
-                months: [3,4,5,6],
-                imgs: ["3月树村公园.png","4月树村公园.png","5月树村公园.png","6月树村公园.png"]
-            },
-            {
-                name: "嘉河公园",
-                months: [3,4,5,6],
-                imgs: ["3月嘉河公园.png","4月嘉河公园.png","5月嘉河公园.png","6月嘉河公园.png"]
-            },
-            {
-                name: "八家郊野公园",
-                months: [3,4,5],
-                imgs: ["3月八家郊野公园.png","4月八家郊野公园.png","5月八家郊野公园.png"]
-            }
-        ];
-
-        let currentGroup = 0;
-        let groupBtns = document.querySelectorAll(".group-btn");
-        let monthTab = document.getElementById("monthTab");
-        let imgContainer = document.getElementById("imgContainer");
-
-        // 显示分类
-        function showGroup(index) {
-            currentGroup = index;
-            groupBtns.forEach((b,i) => b.classList.toggle("active", i===index));
-            renderMonth();
-            showMonth(0);
-        }
-
-        // 渲染月份按钮
-        function renderMonth() {
-            let g = groups[currentGroup];
-            monthTab.innerHTML = g.months.map((m,i) =>
-                `<button class="month-btn ${i===0?'active':''}" onclick="showMonth(${i})">${m}月</button>`
-            ).join("");
-        }
-
-        // 显示月份图片
-        function showMonth(index) {
-            let g = groups[currentGroup];
-            imgContainer.innerHTML = g.imgs.map((src,i) =>
-                `<img src="${src}" class="${i===index?'show':''}">`
-            ).join("");
-
-            document.querySelectorAll(".month-btn").forEach((b,i) =>
-                b.classList.toggle("active", i===index)
-            );
-        }
-
-        // 初始化
-        showGroup(0);
-    </script>
+let cur=0;
+function g(idx){
+cur=idx;
+document.querySelectorAll('.group-btn').forEach((b,i)=>b.classList.toggle('active',i==idx));
+rm();
+sm(0);
+}
+function rm(){
+const mg=groups[cur];
+document.getElementById('m').innerHTML=mg.months.map((mo,i)=>
+`<button class="month-btn ${i==0?'active':''}" onclick="sm(${i})">${mo}月</button>`
+).join('');
+}
+function sm(idx){
+const mg=groups[cur];
+document.getElementById('i').innerHTML=mg.imgs.map((src,i)=>
+`<img src="${src}" class="${i==idx?'show':''}">`
+).join('');
+document.querySelectorAll('.month-btn').forEach((b,i)=>b.classList.toggle('active',i==idx));
+}
+g(0);
+</script>
 </body>
 </html>
